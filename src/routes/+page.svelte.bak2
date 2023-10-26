@@ -1,0 +1,30 @@
+<script>
+//import SuperHeroes from "$lib/components/SuperHeroes.svelte";
+import { onMount } from 'svelte';
+
+let items = [];
+//const description = "Here's my description!";
+
+// untuk bisa load data, pastikan menggunakan onMount, makanya import dulu di atas.
+onMount (async () => {
+        const response = await fetch('./api');
+        items = await response.json();
+})
+
+
+</script>
+
+
+<main>
+pertanyaan
+<ol>
+  {#each items as item}
+    <li class="w-full flex justify-between">
+       {item.question_text}
+    </li>
+  {/each}
+</ol>
+
+</main>
+
+

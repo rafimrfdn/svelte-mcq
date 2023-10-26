@@ -1,0 +1,72 @@
+<script>
+  import { onMount } from 'svelte';
+  
+  let items = [];
+  let options = [];
+  let selectedOption = "";
+  let isCorrect = false;
+
+  // Load the questions and options from the API
+  onMount(async () => {
+    const response = await fetch('./api');
+    items = await response.json();
+
+    // Extract and set options and correctAnswer for the first question
+    setQuestionOptions(0);
+  });
+
+  // Function to set the options and correctAnswer based on the current question index
+  function setQuestionOptions(questionIndex) {
+    options = [
+      items[questionIndex].option_a,
+      items[questionIndex].option_b,
+      items[questionIndex].option_c
+    ];
+    correctAnswer = items[questionIndex].correct_answer;
+  }
+
+  function selectOption(option) {
+    selectedOption = option;
+    isCorrect = option === correctAnswer;
+  }
+
+  // Function to move to the next question
+  function nextQuestion() {
+    const nextQuestionIndex = items.findIndex(item => item.correct_answer !== correctAnswer);
+    if (nextQuestionIndex !== -1) {
+      setQuestionOptions(nextQuestionIndex);
+      selectedOption = ""; // Clear the selected option for the new question
+      isCorrect = false;
+    } else {
+      // All questions have been answered
+      // You can handle this case as needed
+    }
+  }
+</script>
+
+<main>
+  {#if items.length > 0}
+    <ol>
+      {#each items as item, index (item.id)}
+        <li class="w-full flex justify-between">
+          {item.question_text}
+
+          {#each options as option (option)}
+            <label>
+              <input type="radio" name="answer" bind:group={selectedOption} value={option} on:change={() => selectOption(option)} />
+              {option}
+            </label>
+          {/each}
+
+          <button on:click={nextQuestion}>Next Question</button>
+        </li>
+      {/each}
+    </ol>
+
+    {#if isCorrect}
+      <p>Correct!</p>
+    {:else}
+      <p>Incorrect.</p>
+    {/if}
+  {/if}
+</main>

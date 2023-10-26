@@ -1,0 +1,30 @@
+<!-- Question.svelte -->
+<script>
+
+    
+  let question = "What is the capital of France?";
+  let options = ["London", "Berlin", "Paris", "Madrid"];
+  let selectedOption = "";
+  let correctAnswer = "Paris";
+  let isCorrect = false; // To track if the user's answer is correct
+
+  function selectOption(option) {
+    selectedOption = option;
+    isCorrect = option === correctAnswer; // Check if the selected option is correct
+  }
+</script>
+
+<h2>{question}</h2>
+
+{#each options as option}
+  <label>
+    <input type="radio" name="answer" bind:group={selectedOption} value={option} on:change={() => selectOption(option)} />
+    {option}
+  </label>
+{/each}
+
+{#if isCorrect}
+  <p>Correct!</p>
+{:else}
+  <p>Incorrect.</p>
+{/if}
