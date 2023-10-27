@@ -9,11 +9,10 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
-        "@sveltejs/adapter-cloudflare": "2.3.3",
 		"@sveltejs/kit": "^1.20.4",
+		"better-sqlite3": "^8.5.2",
 		"svelte": "^4.0.5",
-		"vite": "^4.4.2",
-    "better-sqlite3": "^8.5.2"
+		"vite": "^4.4.2"
 	},
 	"type": "module"
 }
