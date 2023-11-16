@@ -8,8 +8,8 @@
   let score = 0;
   let completed = false;
   let shuffledQuestions = [];
-  let showHint = false;
 
+  
   let playerName = ""; // Added to store the user's name
 
   onMount(async () => {
@@ -23,10 +23,6 @@
     isCorrect = option === shuffledQuestions[currentQuestion].correct_answer;
   }
 
-  function showExplanation() {
-    showHint = true;
-  }
-
   function nextQuestion() {
     if (isCorrect) {
       score++;
@@ -38,7 +34,6 @@
     } else {
       selectedOption = "";
       isCorrect = false;
-      showHint = false; // Reset the hint display
     }
   }
 
@@ -47,7 +42,6 @@
     score = 0;
     completed = false;
     selectedOption = "";
-    showHint = false;
     shuffledQuestions = shuffleArray(items);
   }
 
@@ -58,6 +52,8 @@
     }
     return array;
   }
+
+
 </script>
 
 <main>
@@ -65,6 +61,7 @@
     <div>
       <label for="name">Enter your name: </label>
       <input type="text" id="name" bind:value={playerName} />
+
     </div>
   {/if}
 
@@ -74,7 +71,7 @@
       <button on:click={restartQuiz}>Restart Quiz</button>
     {:else}
       <h1>{shuffledQuestions[currentQuestion].question_text}</h1>
-      <ul>
+      <ul >
         {#each [
           shuffledQuestions[currentQuestion].option_a,
           shuffledQuestions[currentQuestion].option_b,
@@ -83,20 +80,20 @@
           shuffledQuestions[currentQuestion].option_e
         ] as option}
           <li style="list-style:none; padding:0;">
-            <label>
-              <input type="radio" name="answer" bind:group={selectedOption} value={option} on:change={() => selectOption(option)} />
-              {option}
-            </label>
-          </li>
+                        <label>
+            <input type="radio" name="answer" bind:group={selectedOption} value={option} on:change={() => selectOption(option)} />
+            {option}
+          </label>
+                    </li>
         {/each}
       </ul>
       {#if isCorrect}
         <p>Correct!</p>
-        <button on:click={showExplanation}>Show Explanation</button>
-        {#if showHint}
-          <p>{shuffledQuestions[currentQuestion].hint}</p>
-        {/if}
+
+
+
       {/if}
+
 
       <button on:click={nextQuestion}>Next Question</button>
     {/if}
