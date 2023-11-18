@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ThemeSwitch from '$lib/ThemeSwitch/ThemeSwitch.svelte';
   import { onMount } from 'svelte';
 
   let items = [];
@@ -58,62 +59,70 @@
     }
     return array;
   }
+
+
+
 </script>
 
-<main class="py-0 h-screen w-full px-2" >
+<div class="bg-neutral-100 bg-white dark:bg-black">
 
-    <div class="mb-24 bg-white p-4 md:text-start text-center">
-    <h1 class="font-bold text-xl">SoalCPNS.vercel.app</h1>
-    <h2 >Kumpulan Latihan Soal CPNS HOTS terbaru</h2>
+    <main class="py-0 min-h-screen w-full px-2" >
+        <div class="flex justify-between flex-nowrap">
+            <div class="mb-24 p-4 text-start ">
+                <h1 class="font-bold text-xl">SoalCPNS.vercel.app</h1>
+                <h2 >Kumpulan Latihan Soal CPNS HOTS terbaru</h2>
+            </div>
+            <ThemeSwitch />
         </div>
 
-    <div class=" mx-auto justify-center md:w-1/2 w-full">
-  {#if !completed}
-    <div class="bg-red">
-      <label class="mr-4" for="name">Enter your name: </label>
-      <input class="border p-4 my-2" type="text" id="name" bind:value={playerName} />
-    </div>
-  {/if}
+        <div class=" mx-auto justify-center md:w-1/2 w-full">
+            {#if !completed}
+                <div class="bg-red">
+                    <label class="mr-4" for="name">Enter your name: </label>
+                    <input class="border p-4 my-2 text-black" type="text" id="name" bind:value={playerName} />
+                </div>
+            {/if}
 
-  {#if items.length > 0}
-    {#if completed}
-      <p>{playerName}, Quiz completed. Your score: {score} out of {shuffledQuestions.length}</p>
-      <button class="bg-green-100 p-4 my-4" on:click={restartQuiz}>Restart Quiz</button>
-    {:else}
-      <h2 class="font-bold text-2xl my-10">{shuffledQuestions[currentQuestion].question_text}</h2>
-      <ul class="my-4">
-        {#each [
-          shuffledQuestions[currentQuestion].option_a,
-          shuffledQuestions[currentQuestion].option_b,
-          shuffledQuestions[currentQuestion].option_c,
-          shuffledQuestions[currentQuestion].option_d,
-          shuffledQuestions[currentQuestion].option_e
-        ] as option}
-          <li >
-            <label>
-              <input type="radio" name="answer" bind:group={selectedOption} value={option} on:change={() => selectOption(option)} />
-              {option}
-            </label>
-          </li>
-        {/each}
-      </ul>
-      {#if isCorrect}
-        <p class="my-4 font-bold">Correct!</p>
-        <button class="bg-yellow-200 p-4" on:click={showExplanation}>Show Explanation</button>
-        {#if showHint}
-          <div class="bg-red-100 p-4 my-2">
-            <p >{shuffledQuestions[currentQuestion].hint}</p>
-          </div>
-        {/if}
-      {/if}
+            {#if items.length > 0}
+                {#if completed}
+                    <p>{playerName}, Quiz completed. Your score: {score} out of {shuffledQuestions.length}</p>
+                    <button class="bg-green-100 p-4 my-4" on:click={restartQuiz}>Restart Quiz</button>
+                {:else}
+                    <h2 class="font-bold text-2xl my-10">{shuffledQuestions[currentQuestion].question_text}</h2>
+                    <ul class="my-4">
+                        {#each [
+                            shuffledQuestions[currentQuestion].option_a,
+                            shuffledQuestions[currentQuestion].option_b,
+                            shuffledQuestions[currentQuestion].option_c,
+                            shuffledQuestions[currentQuestion].option_d,
+                            shuffledQuestions[currentQuestion].option_e
+                            ] as option}
+                            <li >
+                                <label>
+                                    <input type="radio" name="answer" bind:group={selectedOption} value={option} on:change={() => selectOption(option)} />
+                                    {option}
+                                </label>
+                            </li>
+                        {/each}
+                    </ul>
+                    {#if isCorrect}
+                        <p class="my-4 font-bold">Correct!</p>
+                        <button class="bg-yellow-200 p-4 text-black" on:click={showExplanation}>Show Explanation</button>
+                        {#if showHint}
+                            <div class="bg-red-100 p-4 my-2 text-black">
+                                <p >{shuffledQuestions[currentQuestion].hint}</p>
+                            </div>
+                        {/if}
+                    {/if}
 
-      <button class="bg-blue-200 p-4 mb-10" on:click={nextQuestion}>Next Question</button>
-    {/if}
-  {:else}
-    <p>Loading questions...</p>
-  {/if}
-            </div>
-</main>
+                    <button class="bg-blue-200 p-4 mb-10 text-black" on:click={nextQuestion}>Next Question</button>
+                {/if}
+            {:else}
+                <p>Loading questions...</p>
+            {/if}
+        </div>
+    </main>
+</div>
 
 <style>
 * {
