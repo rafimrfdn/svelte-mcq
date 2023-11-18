@@ -76,12 +76,12 @@
         </div>
 
         <div class=" mx-auto justify-center md:w-1/2 w-full">
-            {#if !completed}
-                <div class="bg-red">
-                    <label class="mr-4" for="name">Enter your name: </label>
-                    <input class="border p-4 my-2 text-black" type="text" id="name" bind:value={playerName} />
-                </div>
-            {/if}
+            <!-- {#if !completed} -->
+            <!--     <div class="bg-red"> -->
+            <!--         <label class="mr-4" for="name">Enter your name: </label> -->
+            <!--         <input class="border p-4 my-2 text-black" type="text" id="name" bind:value={playerName} /> -->
+            <!--     </div> -->
+            <!-- {/if} -->
 
             {#if items.length > 0}
                 {#if completed}
