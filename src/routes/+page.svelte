@@ -60,11 +60,13 @@
   }
 </script>
 
-    <div class="mb-4 bg-white p-4 md:text-start text-center">
+<main class="py-0 h-screen w-full px-2" >
+
+    <div class="mb-24 bg-white p-4 md:text-start text-center">
     <h1 class="font-bold text-xl">SoalCPNS.vercel.app</h1>
     <h2 >Kumpulan Latihan Soal CPNS HOTS terbaru</h2>
         </div>
-<main class="md:py-24 py-0 h-screen w-full px-2" >
+
     <div class=" mx-auto justify-center md:w-1/2 w-full">
   {#if !completed}
     <div class="bg-red">
@@ -105,7 +107,7 @@
         {/if}
       {/if}
 
-      <button class="bg-blue-200 p-4" on:click={nextQuestion}>Next Question</button>
+      <button class="bg-blue-200 p-4 mb-10" on:click={nextQuestion}>Next Question</button>
     {/if}
   {:else}
     <p>Loading questions...</p>
